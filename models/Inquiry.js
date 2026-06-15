@@ -14,6 +14,17 @@ const InquirySchema = new mongoose.Schema({
     currentSourceCountry: { type: String, default: '' },
     currentSellMarketCountry: { type: String, default: '' },
     preferredSellMarketCountry: { type: String, default: '' },
+    productName: { type: String, default: '' },
+    productCategory: { type: String, default: '' },
+    productLink: { type: String, default: '' },
+    productDescription: { type: String, default: '' },
+    productSpecifications: { type: String, default: '' },
+    trialSampleQuantity: { type: String, default: '' },
+    monthlyYearlyQuantity: { type: String, default: '' },
+    productBrandingRequired: { type: Boolean, default: false },
+    certificationsNeeded: { type: [String], default: [] },
+    certificationsOther: { type: String, default: '' },
+    shipmentPreferences: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
 });
 

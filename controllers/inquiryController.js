@@ -59,6 +59,17 @@ const createInquiry = async (req, res) => {
             currentSourceCountry,
             currentSellMarketCountry,
             preferredSellMarketCountry,
+            productName,
+            productCategory,
+            productLink,
+            productDescription,
+            productSpecifications,
+            trialSampleQuantity,
+            monthlyYearlyQuantity,
+            productBrandingRequired,
+            certificationsNeeded,
+            certificationsOther,
+            shipmentPreferences,
         } = req.body;
 
         if (!companyName?.trim() || !contactPersonName?.trim()) {
@@ -68,7 +79,17 @@ const createInquiry = async (req, res) => {
             });
         }
 
+        if (!productName?.trim() || !productCategory?.trim() || !productDescription?.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: 'Product name, category, and description are required',
+            });
+        }
+
         const hasExperience = Boolean(hasImportExperience);
+        const certifications = Array.isArray(certificationsNeeded)
+            ? certificationsNeeded.map((item) => String(item).trim()).filter(Boolean)
+            : [];
 
         const inquiry = await Inquiry.create({
             companyName: String(companyName).trim(),
@@ -83,6 +104,17 @@ const createInquiry = async (req, res) => {
             currentSourceCountry: hasExperience ? String(currentSourceCountry ?? '').trim() : '',
             currentSellMarketCountry: hasExperience ? String(currentSellMarketCountry ?? '').trim() : '',
             preferredSellMarketCountry: hasExperience ? '' : String(preferredSellMarketCountry ?? '').trim(),
+            productName: String(productName).trim(),
+            productCategory: String(productCategory).trim(),
+            productLink: String(productLink ?? '').trim(),
+            productDescription: String(productDescription).trim(),
+            productSpecifications: String(productSpecifications ?? '').trim(),
+            trialSampleQuantity: String(trialSampleQuantity ?? '').trim(),
+            monthlyYearlyQuantity: String(monthlyYearlyQuantity ?? '').trim(),
+            productBrandingRequired: Boolean(productBrandingRequired),
+            certificationsNeeded: certifications,
+            certificationsOther: String(certificationsOther ?? '').trim(),
+            shipmentPreferences: String(shipmentPreferences ?? '').trim(),
         });
 
         res.status(201).json({
