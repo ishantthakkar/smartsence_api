@@ -16,4 +16,14 @@ router.post(
     wecomController.receiveMessage
 );
 
+router.get(
+    '/logs',
+    wecomController.getLogs
+);
+
+router.get(
+    '/logs/view',
+    wecomController.viewLogs
+);
+
 module.exports = router;
